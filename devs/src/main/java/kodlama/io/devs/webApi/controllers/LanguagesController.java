@@ -5,14 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kodlama.io.devs.business.abstracts.LanguageService;
+import kodlama.io.devs.business.requests.language.CreateLanguageRequest;
+import kodlama.io.devs.business.requests.language.DeleteLanguageRequest;
+import kodlama.io.devs.business.requests.language.UpdateLanguageRequest;
+import kodlama.io.devs.business.responses.GetAllLanguagesResponse;
 import kodlama.io.devs.entities.concretes.Language;
 
 @RestController
@@ -26,27 +28,27 @@ public class LanguagesController {
 	}
 	
 	@GetMapping("/getall")
-	public List<Language> getAll(){
+	public List<GetAllLanguagesResponse> getAll(){
 		return languageService.getAll();
 	}
 	
-	@GetMapping("/{id}")
-	public Language getById(@PathVariable() int id) throws Exception{
+	@GetMapping("/getById")
+	public Language getById(Integer id) throws Exception{
 		return languageService.getById(id);
 	}
 	
 	@PostMapping("/add")
-	public void add(@RequestBody Language language) throws Exception{
-		languageService.add(language);
+	public void add(CreateLanguageRequest createLanguageRequest) throws Exception{
+		languageService.add(createLanguageRequest);
 	}
 	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable(name = "id") int id) throws Exception{
-		languageService.delete(id);
+	@DeleteMapping("/delete")
+	public void delete(DeleteLanguageRequest deleteLanguageRequest) throws Exception{
+		languageService.delete(deleteLanguageRequest);
 	}
 	
 	@PutMapping("/update")
-	public void update(@RequestBody Language language, @PathVariable int id) throws Exception{
-		languageService.update(language, id);
+	public void update(UpdateLanguageRequest updateLanguageRequest, Integer id) throws Exception{
+		languageService.update(updateLanguageRequest, id);
 	}
 }
